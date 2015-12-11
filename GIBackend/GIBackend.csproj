@@ -111,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Scripts\mapa.js" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -121,6 +122,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Main\Data\ludnosc.csv" />
     <Content Include="Views\Main\Data\pkb.csv" />
+    <Content Include="Views\Main\Map.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

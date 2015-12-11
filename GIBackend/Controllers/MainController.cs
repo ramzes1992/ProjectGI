@@ -19,6 +19,11 @@ namespace GIBackend.Controllers
             return View();
         }
 
+        public ActionResult Map()
+        {
+            return View();
+        }
+
         public JsonResult GetGDPData()
         {
             return Json("hello world", JsonRequestBehavior.AllowGet);

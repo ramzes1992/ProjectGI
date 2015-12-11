@@ -25,7 +25,8 @@ namespace GIBackend
 
             bundles.Add(new ScriptBundle("~/scripts/ulf").Include(
                         "~/Scripts/underscore.js",
-                        "~/Scripts/rankings.js"
+                        "~/Scripts/rankings.js",
+                        "~/Scripts/mapa.js"
                         ));
 
             bundles.Add(new StyleBundle("~/styles/ulf").Include(
