@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">*@
+    @*<link rel="stylesheet" type="text/css" href="rankings.css">*@
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>*@
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script src="~/Scripts/d3/d3.js"></script>
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/underscore.js"></script>
+
+
+    @*@Scripts.Render("~/scripts/ulf")*@
+    @Styles.Render("~/styles/ulf")
+</head>
+<body>
+    <div class="container-fixed">
+        <div class="row">
+            <div id="chart" class="col-xs-8 "></div>
+            <div class="col-xs-2 ">
+                <ul>
+                    <li data='/../Data/pkb.csv'>PKB</li>
+                    <li data='/../Data/ludnosc.csv'>Ludność</li>
+                    <li>PKB per capita</li>
+                    <li>lorem ipsum</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    @*<script src="rankings.js"></script>*@
+    <script src="~/Scripts/rankings.js"></script>
+</body>
+</html>

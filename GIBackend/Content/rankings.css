@@ -1,0 +1,37 @@
+.pkb {
+  fill: steelblue;
+   stroke: steelblue;
+}
+.ludnosc{
+  fill: green;
+   stroke: green;
+
+}
+
+circle text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+
+
+.line {
+  fill: none;
+  stroke-width: 1.5px;
+}
+li {
+    list-style-type: none;
+    cursor: pointer;
+}
