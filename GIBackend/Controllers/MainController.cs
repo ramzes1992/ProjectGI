@@ -21,7 +21,7 @@ namespace GIBackend.Controllers
 
         public JsonResult GetGDPData()
         {
-            
+            return Json("hello world", JsonRequestBehavior.AllowGet);
         }
     }
 }
