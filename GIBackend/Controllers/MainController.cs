@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -37,11 +38,11 @@ namespace GIBackend.Controllers
 
                 items.Add(new GDPDataItem()
                 {
-                    CountryCode = columnValues[0],
-                    Year = columnValues[1],
-                    Value = columnValues[2],
+                    CountryCode = int.Parse(columnValues[0]),
+                    Year = int.Parse(columnValues[1]),
+                    Value = double.Parse(columnValues[2], CultureInfo.InvariantCulture),
                     ValueFootnotes = columnValues[3],
-                    CountryName = columnValues[4]
+                    CountryName = columnValues[4],
                 });
             }
 
@@ -50,9 +51,9 @@ namespace GIBackend.Controllers
 
         class GDPDataItem
         {
-            public string CountryCode { get; set; }
-            public string Year { get; set; }
-            public string Value { get; set; }
+            public int CountryCode { get; set; }
+            public int Year { get; set; }
+            public double Value { get; set; }
             public string ValueFootnotes { get; set; }
             public string CountryName { get; set; }
         }
