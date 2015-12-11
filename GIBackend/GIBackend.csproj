@@ -123,6 +123,7 @@
     <Content Include="Views\Main\Data\ludnosc.csv" />
     <Content Include="Views\Main\Data\pkb.csv" />
     <Content Include="Views\Main\Map.cshtml" />
+    <Content Include="Data\kraje.csv" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

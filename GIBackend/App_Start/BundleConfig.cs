@@ -42,8 +42,8 @@ namespace GIBackend
                       "~/Content/site.css"));
 
             bundles.Add(new Bundle("~/bundles/data").Include(
-                "~/Data/ludnosc.csv",
-                "~/Data/pkb.csv"
+                      "~/Data/ludnosc.csv",
+                      "~/Data/pkb.csv"
                 ));
         }
     }
