@@ -23,11 +23,14 @@
  
   // group the svg layers 
   var g = svg.append("g");
- //d3.csv('kraje.csv', type, function(error, data) {
- // if (error) throw error;
-  // load data and display the map on the canvas with country geometries
+ d3.json('getgdpdata', function(error, data) {
+  if (error) throw error;
+ //  load data and display the map on the canvas with country geometries
   d3.json("https://gist.githubusercontent.com/d3noob/5193723/raw/world-110m2.json", function(error, topology) {
-     // var codes = _.map(data,function(x){return x.code});
+      
+      var max = _.max(data, function (x) { return x.Value; });
+      var min = _.min(data, function (x) { return x.Value; });
+      var avg = d3.sum(data, function (x) { return x.Value; }) / data.length;
       g.selectAll("path")
         .data(topojson.object(topology, topology.objects.countries)
             .geometries)
@@ -35,11 +38,19 @@
         .append("path")
         .attr("d", path)
         .attr("class", "country")
-        .attr("id", function (d) { return d.id });
-              //.style("fill", function(d){
-              // return codes.indexOf(d.id)>=0?'green':'grey'
-              //});
-  //});
+        .attr("id", function (d) { return d.id })
+              .style("fill", function (d) {
+                  var cdata = _.find(data, function (x) { return x.CountryCode == d.id; });
+                  var color = undefined;
+                  if (cdata == undefined)
+                      return "grey";
+                  if ( cdata.Value > avg)
+                      color = d3.rgb(0, 51, 0).darker((cdata.Value / max.Value));
+                  else
+                      color = d3.rgb(255, 0, 0).darker((min.Value / cdata.Value));
+                  return color;
+              });
+  });
   
   });
   // zoom and pan functionality
@@ -54,7 +65,7 @@
   svg.call(zoom)*/
  
  function type(d){
-  d.code =+d.code;
-  d.value =+d.value;
+     d.CountryCode = +d.CountryCode;
+  d.Value =+d.Value;
   return d;
  }
