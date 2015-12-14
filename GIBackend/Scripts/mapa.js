@@ -23,14 +23,18 @@
  
   // group the svg layers 
   var g = svg.append("g");
- d3.json('getgdpdata', function(error, data) {
+  var data = undefined;
+  var max = undefined;
+  var min = undefined;
+  var avg = undefined;
+  d3.json('getgdpdata', function(error, data) {
   if (error) throw error;
  //  load data and display the map on the canvas with country geometries
   d3.json("https://gist.githubusercontent.com/d3noob/5193723/raw/world-110m2.json", function(error, topology) {
-      
-      var max = _.max(data, function (x) { return x.Value; });
-      var min = _.min(data, function (x) { return x.Value; });
-      var avg = d3.sum(data, function (x) { return x.Value; }) / data.length;
+      this.data = data;
+      this.max = _.max(data, function (x) { return x.Value; }).Value;
+      this.min = _.min(data, function (x) { return x.Value; }).Value;
+      this.avg = d3.sum(data, function (x) { return x.Value; }) / data.length;
       g.selectAll("path")
         .data(topojson.object(topology, topology.objects.countries)
             .geometries)
@@ -39,17 +43,48 @@
         .attr("d", path)
         .attr("class", "country")
         .attr("id", function (d) { return d.id })
-              .style("fill", function (d) {
-                  var cdata = _.find(data, function (x) { return x.CountryCode == d.id; });
-                  var color = undefined;
-                  if (cdata == undefined)
-                      return "grey";
-                  if ( cdata.Value > avg)
-                      color = d3.rgb(0, 51, 0).darker((cdata.Value / max.Value));
-                  else
-                      color = d3.rgb(255, 0, 0).darker((min.Value / cdata.Value));
-                  return color;
-              });
+              .style("fill", fill);
+
+      var legend = svg.selectAll(".legend")
+    .data(_.map(data,function(x){x.Value}))
+    .enter()
+    .append("g")
+        .attr({
+            'class': 'legend',
+            'transform': function (d, i) {
+                return "translate(" + (i * 40) + "," + (height  - 40) + ")";
+            }
+        });
+
+      legend
+          .data([min, avg, max])
+          .append("rect")
+      .attr({
+          'width': 40,
+          'height': 20,
+          'fill': function (d) {
+              var color = 'grey';
+              if (d > avg)
+                  color = d3.rgb(0, 51, 0).darker((d / max));
+              else
+                  color = d3.rgb(255, 0, 0).darker((min / d));
+              return color;
+          }
+          // Problem likely to be arising from here
+      });
+      legend.data([min,avg,max]).append("text")
+      .attr("x",20)
+      .attr("y", 2)
+      .attr("dy", ".75em")
+      .attr("text-anchor", "middle")
+      .text(function (d) {
+          if (d > avg)
+              return "max";
+          if (d < avg)
+              return "min";
+          return "avg";
+      }
+          );
   });
   
   });
@@ -64,6 +99,17 @@
  
   svg.call(zoom)*/
  
+ function fill(d){
+     var cdata = _.find(data, function (x) { return x.CountryCode == d.id; });
+     var color = undefined;
+     if (cdata == undefined)
+         return "grey";
+     if ( cdata.Value > avg)
+         color = d3.rgb(0, 51, 0).darker((cdata.Value / max));
+     else
+         color = d3.rgb(255, 0, 0).darker((min / cdata.Value));
+     return color;
+ }
  function type(d){
      d.CountryCode = +d.CountryCode;
   d.Value =+d.Value;
