@@ -39,10 +39,15 @@
         .data(topojson.object(topology, topology.objects.countries)
             .geometries)
       .enter()
-        .append("path")
+          .append("svg:a")
+         .attr("xlink:href", function (d) {
+             return "http://localhost:4282/Main/Ranking/" + d.id
+         })
+        .append("svg:path")
         .attr("d", path)
         .attr("class", "country")
         .attr("id", function (d) { return d.id })
+           .attr("href", "newPage.html")
               .style("fill", fill);
 
       var legend = svg.selectAll(".legend")
