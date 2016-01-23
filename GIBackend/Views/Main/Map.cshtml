@@ -10,8 +10,30 @@
             fill: grey;
         }
     </style>
-    <body>
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/bootstrap")
 
+<script src="~/Scripts/d3/d3.js"></script>
+<script src="~/Scripts/jquery-2.1.4.min.js"></script>
+
+
+
+@Styles.Render("~/styles/ulf")
+    <body>
+        <div class="container-fixed">
+            <div class="row">
+                <div id="chart" class="col-xs-8 "></div>
+                <div class="col-xs-2 ">
+                    <ul>
+                        <li data='getgdpdata'>PKB</li>
+                        <li data='getgdpdata'>Ludność</li>
+                        <li data='getgdpdata'>PKB per capita</li>
+                        <li data='getgdpdata'>lorem ipsum</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
         <!-- implementation of the hosted D3- and TopoJson js-libraries -->
         <script src="http://d3js.org/d3.v3.min.js"></script>
         <script src="http://d3js.org/topojson.v0.min.js"></script>
