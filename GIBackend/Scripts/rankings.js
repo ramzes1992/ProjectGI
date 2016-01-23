@@ -1,4 +1,4 @@
-var files = ['/../Data/pkb.csv']
+var files = []
  var loadData = function(i,x,y,svg,height,width,xAxis,yAxis){
   var clas = files[i].substring(files[i].lastIndexOf("/")+1,files[i].indexOf('.csv'))
   d3.csv(files[i], type, function(error, data) {
@@ -95,12 +95,22 @@ var toggleData = function(data){
     }
 }
 
-chart(files)
+
 _.each($('li'),function(li){
     $(li).on("click", function () {
         var tmp = files.length;
-        toggleData($(li).attr('data'))
-        if(tmp != files.length)
+ 
+        
+        toggleData($(li).attr('data'));
+        if (tmp != files.length) {
             chart(files)
+            if ($(li).attr("class")) {
+                $(li).attr("class", null);
+            } else {
+
+                $(li).attr("class", $(li).attr("id"));
+            }
+        }
   })
 })
+$($('li')[0]).trigger("click");

@@ -115,12 +115,15 @@ function map(dataURL) {
         return d;
     }
 }
-var dataUrl = 'getgdpdata';
-map(dataUrl);
 
 _.each($('li'),function(li){
     $(li).on("click", function () {
+       
+        $('li').attr("class",null);
+        $(li).attr("class", "selected");
         dataUrl = $(li).attr('data'); 
         map(dataUrl)
   })
 })
+
+$($('li')[0]).trigger("click");

@@ -1,11 +1,15 @@
+body{
+	padding-top: 0
+}
 .pkb {
   fill: steelblue;
    stroke: steelblue;
+   background-color: steelblue;
 }
 .ludnosc{
   fill: green;
    stroke: green;
-
+   background-color: green;
 }
 
 circle text {

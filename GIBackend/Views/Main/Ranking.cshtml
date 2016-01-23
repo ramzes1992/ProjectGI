@@ -17,21 +17,24 @@
     @Styles.Render("~/styles/ulf")
 </head>
 <body>
+    <h1>Ranking</h1>
     <div class="container-fixed">
         <div class="row">
-            <div id="chart" class="col-xs-8 "></div>
+            <div id="chart" class="col-xs-7 "></div>
             <div class="col-xs-2 ">
-                <ul>
-                    <li data='/../Data/pkb.csv'>PKB</li>
-                    <li data='/../Data/ludnosc.csv'>Ludność</li>
-                    <li>PKB per capita</li>
-                    <li>lorem ipsum</li>
-                </ul>
-            </div>
-        </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
 
-    </div>
-    @*<script src="rankings.js"></script>*@
-    <script src="~/Scripts/rankings.js"></script>
+                        <li id="pkb" data='/../Data/pkb.csv'>PKB</li>
+                        <li id="ludnosc" data='/../Data/ludnosc.csv'>Ludność</li>
+                        <li id="pkbpc">PKB per capita</li>
+                        <li id="lorem">lorem ipsum</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            @*<script src="rankings.js"></script>*@
+            <script src="~/Scripts/rankings.js"></script>
 </body>
 </html>

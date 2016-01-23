@@ -9,6 +9,9 @@
             stroke-width: 0.5px;
             fill: grey;
         }
+        .selected {
+            background-color: gainsboro;
+        }
     </style>
 @Styles.Render("~/Content/css")
 @Scripts.Render("~/bundles/bootstrap")
@@ -20,16 +23,23 @@
 
 @Styles.Render("~/styles/ulf")
     <body>
-        <div class="container-fixed">
+        <div class="container-fluid">
             <div class="row">
-                <div id="chart" class="col-xs-8 "></div>
+                <div id="chart" class="col-xs-7 "></div>
                 <div class="col-xs-2 ">
-                    <ul>
-                        <li data='getgdpdata'>PKB</li>
-                        <li data='getgdpdata'>Ludność</li>
-                        <li data='getgdpdata'>PKB per capita</li>
-                        <li data='getgdpdata'>lorem ipsum</li>
-                    </ul>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+
+                            <ul>
+                                <li data='getgdpdata'>PKB</li>
+                                <li data='getgdpdata'>Ludność</li>
+                                <li data='getgdpdata'>PKB per capita</li>
+                                <li data='getgdpdata'>lorem ipsum</li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
 
