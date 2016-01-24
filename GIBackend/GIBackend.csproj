@@ -124,6 +124,7 @@
     <Content Include="Views\Main\Data\pkb.csv" />
     <Content Include="Views\Main\Map.cshtml" />
     <Content Include="Data\kraje.csv" />
+    <Content Include="Data\country-codes.csv" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
