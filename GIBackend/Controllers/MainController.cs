@@ -77,18 +77,18 @@ namespace GIBackend.Controllers
             return Json(items, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetGDPRanking(int? countryCode)
+        public JsonResult GetPopulationRanking(int? countryCode)
         {
-            var path = HttpContext.Server.MapPath("~/Data/pkb.csv");
+            var path = HttpContext.Server.MapPath("~/Data/ludnosc.csv");
             var data = System.IO.File.ReadAllLines(path);
 
-            List<GDPRanking> items = new List<GDPRanking>();
+            List<RankingData> items = new List<RankingData>();
 
             for (int i = 1; i < data.Length; i++)//first row has only columns names
             {
                 var columnValues = data[i].Split(',');
 
-                items.Add(new GDPRanking()
+                items.Add(new RankingData()
                 {
                     country = columnValues[0],
                     year = int.Parse(columnValues[1]),
@@ -99,7 +99,29 @@ namespace GIBackend.Controllers
             return Json(items, JsonRequestBehavior.AllowGet);
         }
 
-        class GDPRanking
+        public JsonResult GetGDPRanking(int? countryCode)
+        {
+            var path = HttpContext.Server.MapPath("~/Data/pkb.csv");
+            var data = System.IO.File.ReadAllLines(path);
+
+            List<RankingData> items = new List<RankingData>();
+
+            for (int i = 1; i < data.Length; i++)//first row has only columns names
+            {
+                var columnValues = data[i].Split(',');
+
+                items.Add(new RankingData()
+                {
+                    country = columnValues[0],
+                    year = int.Parse(columnValues[1]),
+                    value = int.Parse(columnValues[2]),
+                });
+            }
+
+            return Json(items, JsonRequestBehavior.AllowGet);
+        }
+
+        class RankingData
         {
             public string country { get; set; }
             public int year { get; set; }
