@@ -99,9 +99,11 @@ var toggleData = function(data){
 }
 var toggleClasses = function(clas){
     if (clas !== undefined) {
-        if(_.contains(clas, classes)){
+        if (_.find(classes, function (x) {
+            return x === clas;
+        })) {
             if (classes.length > 1)
-            classes.splice(files.indexOf(clas), 1);
+            classes.splice(classes.indexOf(clas), 1);
 
         
         } else {
