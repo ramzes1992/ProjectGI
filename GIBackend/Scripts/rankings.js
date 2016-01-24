@@ -1,7 +1,8 @@
 var files = []
+var classes = []
  var loadData = function(i,x,y,svg,height,width,xAxis,yAxis){
-  var clas = files[i].substring(files[i].lastIndexOf("/")+1,files[i].indexOf('.csv'))
-  d3.csv(files[i], type, function(error, data) {
+  var clas = classes[i];
+  d3.json(files[i], function(error, data) {
   if (error) throw error;
 
 
@@ -89,8 +90,22 @@ var toggleData = function(data){
         if(_.contains(files, data)){
             if (files.length > 1)
             files.splice(files.indexOf(data), 1);
+
+        
         } else {
             files.push(data);
+        }
+    }
+}
+var toggleClasses = function(clas){
+    if (clas !== undefined) {
+        if(_.contains(clas, classes)){
+            if (classes.length > 1)
+            classes.splice(files.indexOf(clas), 1);
+
+        
+        } else {
+            classes.push(clas);
         }
     }
 }
@@ -102,6 +117,7 @@ _.each($('li'),function(li){
  
         
         toggleData($(li).attr('data'));
+        toggleClasses($(li).attr('id'));
         if (tmp != files.length) {
             chart(files)
             if ($(li).attr("class")) {
