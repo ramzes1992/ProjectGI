@@ -126,6 +126,9 @@
     <Content Include="Data\kraje.csv" />
     <Content Include="Data\country-codes.csv" />
     <Content Include="Data\GDPEurope.csv" />
+    <Content Include="Data\PopulationEurope.csv" />
+    <Content Include="Data\GDPPerCapitaEuroper.csv" />
+    <Content Include="Views\Main\BarChart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

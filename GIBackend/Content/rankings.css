@@ -12,6 +12,12 @@ body{
    background-color: green;
 }
 
+.pkbpc{
+  fill: palevioletred;
+   stroke: palevioletred;
+   background-color: palevioletred;
+}
+
 circle text {
   fill: white;
   font: 10px sans-serif;
