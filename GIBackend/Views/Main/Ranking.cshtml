@@ -17,7 +17,8 @@
     @Styles.Render("~/styles/ulf")
 </head>
 <body>
-    <h1>Ranking</h1>
+    <h1>Ranking @ViewData["CountryName"]</h1>
+    <a href="/Main/BarChart/@(ViewData["ConutryCode"])">Bar Chart</a>
     <div class="container-fixed">
         <div class="row">
             <div id="chart" class="col-xs-7 "></div>

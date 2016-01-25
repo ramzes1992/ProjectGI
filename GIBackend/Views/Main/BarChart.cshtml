@@ -11,6 +11,7 @@
         text-anchor: middle;
     }
 </style>
+<h1>GDP @ViewData["CountryName"]</h1>
 <svg class="chart"></svg>
 <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
@@ -25,7 +26,7 @@ var chart = d3.select(".chart")
     .attr("width", width)
     .attr("height", height);
 
-d3.json("GetGDPRanking/616", function (error, data) {
+d3.json("/Main/GetGDPValues/@ViewData["CountryCode"]", function (error, data) {
   y.domain([0, d3.max(data, function(d) { return d.value; })]);
 
   var barWidth = width / data.length;

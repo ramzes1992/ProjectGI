@@ -103,6 +103,7 @@ namespace GIBackend.Controllers
                 {
                     var countryName = CountryCodes[id.Value];
                     ViewData["ConutryCode"] = id.Value;
+                    ViewData["CountryName"] = countryName;
                 }
             }
 
@@ -190,6 +191,33 @@ namespace GIBackend.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetGDPValues(int? id)
+        {
+            var result = new List<RankingDataItem>();
+
+            var data = GDPDataItems
+                        .Where(i => i.CountryCode.Equals(id.Value))
+                        .ToList();
+
+            foreach (var item in data)
+            {
+                var same_year = GDPDataItems.Where(i => i.Year.Equals(item.Year)).ToList();
+                var sorted = same_year.OrderByDescending(i => i.Value).ToList();
+                var value = (int)(item.Value/1000000);//sorted.IndexOf(item) + 1;
+
+                result.Add(new RankingDataItem()
+                {
+                    country = item.CountryName,
+                    year = item.Year,
+                    value = value,
+                });
+            }
+
+            result = result.OrderBy(i => i.year).Skip(result.Count - take).Take(take).ToList();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GetGDPPerCapitaRanking(int? id)
         {
             var result = new List<RankingDataItem>();
@@ -217,8 +245,18 @@ namespace GIBackend.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult BarChart()
+        public ActionResult BarChart(int? id)
         {
+            if (id.HasValue)
+            {
+                if (CountryCodes.ContainsKey(id.Value))
+                {
+                    var countryName = CountryCodes[id.Value];
+                    ViewData["CountryCode"] = id.Value;
+                    ViewData["CountryName"] = countryName;
+                }
+            }
+
             return View();
         }
     }
