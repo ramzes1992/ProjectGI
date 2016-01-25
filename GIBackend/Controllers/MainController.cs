@@ -11,6 +11,8 @@ namespace GIBackend.Controllers
     public class MainController : Controller
     {
         public static Dictionary<int, string> CountryCodes = new Dictionary<int, string>();
+        public static List<GDPDataItem> GDPDataItems = new List<GDPDataItem>();
+
 
         public MainController()
         {
@@ -25,6 +27,24 @@ namespace GIBackend.Controllers
                         continue;
                     var values = line.Split(',');
                     CountryCodes.Add(int.Parse(values[4]), values[0]);
+                }
+            }
+
+            if (!GDPDataItems.Any())
+            {
+                var path = HostingEnvironment.MapPath("~/Data/GDPEurope.csv");
+                var countryCodesLines = System.IO.File.ReadAllLines(path);
+                foreach (var line in countryCodesLines.Skip(1))
+                {
+                    var values = line.Replace("\"", "").Split(',');
+                    var item = new GDPDataItem();
+                    item.CountryCode = CountryCodes.First(i => i.Value.Equals(values[0])).Key;
+                    item.CountryName = values[0];
+                    item.Year = int.Parse(values[1]);
+                    item.Value = double.Parse(values[2], CultureInfo.InvariantCulture);
+                    item.ValueFootnotes = "";
+
+                    GDPDataItems.Add(item);
                 }
             }
         }
@@ -42,6 +62,7 @@ namespace GIBackend.Controllers
                 if (CountryCodes.ContainsKey(id.Value))
                 {
                     var countryName = CountryCodes[id.Value];
+                    ViewData["ConutryCode"] = id.Value;
                 }
             }
 
@@ -55,29 +76,12 @@ namespace GIBackend.Controllers
 
         public JsonResult GetGDPData()
         {
-            var path = HttpContext.Server.MapPath("~/Data/kraje.csv");
-            var data = System.IO.File.ReadAllLines(path);
+            var result = GDPDataItems.Where(i => i.Year.Equals(2014)).ToList();
 
-            List<GDPDataItem> items = new List<GDPDataItem>();
-
-            for (int i = 1; i < data.Length; i++)//first row has only columns names
-            {
-                var columnValues = data[i].Split(',');
-
-                items.Add(new GDPDataItem()
-                {
-                    CountryCode = int.Parse(columnValues[0]),
-                    Year = int.Parse(columnValues[1]),
-                    Value = double.Parse(columnValues[2], CultureInfo.InvariantCulture),
-                    ValueFootnotes = columnValues[3],
-                    CountryName = columnValues[4],
-                });
-            }
-
-            return Json(items, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetPopulationRanking(int? countryCode)
+        public JsonResult GetPopulationRanking(int? id)
         {
             var path = HttpContext.Server.MapPath("~/Data/ludnosc.csv");
             var data = System.IO.File.ReadAllLines(path);
@@ -99,43 +103,48 @@ namespace GIBackend.Controllers
             return Json(items, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetGDPRanking(int? countryCode)
+        public JsonResult GetGDPRanking(int? id)
         {
-            var path = HttpContext.Server.MapPath("~/Data/pkb.csv");
-            var data = System.IO.File.ReadAllLines(path);
+            var result = new List<RankingData>();
 
-            List<RankingData> items = new List<RankingData>();
+            var data = GDPDataItems
+                        .Where(i => i.CountryCode.Equals(id.Value))
+                        .ToList();
 
-            for (int i = 1; i < data.Length; i++)//first row has only columns names
+            foreach (var item in data)
             {
-                var columnValues = data[i].Split(',');
+                var same_year = GDPDataItems.Where(i => i.Year.Equals(item.Year)).ToList();
+                var sorderd = same_year.OrderByDescending(i => i.Value).ToList();
+                var value = sorderd.IndexOf(same_year.Single(s => s.CountryCode.Equals(id.Value))) + 1;
 
-                items.Add(new RankingData()
+                result.Add(new RankingData()
                 {
-                    country = columnValues[0],
-                    year = int.Parse(columnValues[1]),
-                    value = int.Parse(columnValues[2]),
+                    country = item.CountryName,
+                    year = item.Year,
+                    value = value,
                 });
             }
 
-            return Json(items, JsonRequestBehavior.AllowGet);
+            result = result.OrderBy(i => i.year).ToList();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        class RankingData
-        {
-            public string country { get; set; }
-            public int year { get; set; }
-            public int value { get; set; }
-        }
+    }
 
-        class GDPDataItem
-        {
-            public int CountryCode { get; set; }
-            public int Year { get; set; }
-            public double Value { get; set; }
-            public string ValueFootnotes { get; set; }
-            public string CountryName { get; set; }
-        }
+    class RankingData
+    {
+        public string country { get; set; }
+        public int year { get; set; }
+        public int value { get; set; }
+    }
 
+    public class GDPDataItem
+    {
+        public int CountryCode { get; set; }
+        public int Year { get; set; }
+        public double Value { get; set; }
+        public string ValueFootnotes { get; set; }
+        public string CountryName { get; set; }
     }
 }

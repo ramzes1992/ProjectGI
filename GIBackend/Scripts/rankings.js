@@ -7,7 +7,7 @@ var classes = []
 
 
   x.domain(data.map(function(d) { return d.year; }));
-  y.domain([0, 10]);
+  y.domain([0, 40]);
 
 svg.append("g")
       .attr("class", "x axis")
