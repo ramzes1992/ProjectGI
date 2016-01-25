@@ -93,6 +93,7 @@ var toggleData = function(data){
 
         
         } else {
+            files = [];
             files.push(data);
         }
     }
@@ -107,6 +108,7 @@ var toggleClasses = function(clas){
 
         
         } else {
+            classes = [];
             classes.push(clas);
         }
     }
@@ -115,20 +117,16 @@ var toggleClasses = function(clas){
 
 _.each($('li'),function(li){
     $(li).on("click", function () {
-        var tmp = files.length;
- 
-        
+
+        $('li').attr('class',null);
         toggleData($(li).attr('data'));
         toggleClasses($(li).attr('id'));
-        if (tmp != files.length) {
-            chart(files)
-            if ($(li).attr("class")) {
-                $(li).attr("class", null);
-            } else {
 
+            chart(files)
+          
                 $(li).attr("class", $(li).attr("id"));
-            }
-        }
+            
+        
   })
 })
 $($('li')[0]).trigger("click");
